@@ -1,3 +1,8 @@
+/* ===== SMOOTH SCROLLING ===== */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -31,6 +36,14 @@ nav a {
   margin: 0 15px;
   text-decoration: none;
   font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 section {
   padding: 20px;
@@ -88,6 +101,7 @@ h1 {
 }
 
 .featured-details {
+  padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
