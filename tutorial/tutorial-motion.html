@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motion Detector Tutorial - Arduino Fun Kits</title>
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Arduino Fun Kits for Kids</h1>
+      <p>Learn electronics through play and creativity!</p>
+    </header>
+    <nav>
+      <a href="../index.html">🏠 Home</a>
+      <a href="#tutorials">Tutorial</a>
+    </nav>
+    <section id="tutorials">
+      <h2>👀 Motion Detector Tutorial</h2>
+      <p>
+        Build a smart motion detector that lights up when movement is detected!
+      </p>
+
+      <!-- Progress Bar -->
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+
+      <!-- Steps with Images -->
+      <div class="step active">
+        <h3>Step 1: Setup Your Workspace</h3>
+        <p>
+          Place your Arduino Uno and breadboard on a flat surface. Make sure you
+          have all components ready.
+        </p>
+        <div class="step-image">
+          <img
+            src="images/motion-step1.jpg"
+            alt="Arduino and breadboard setup"
+          />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 2: Insert PIR Motion Sensor</h3>
+        <p>
+          Carefully insert the PIR motion sensor module into the breadboard. The
+          sensor has three pins: VCC, GND, and OUT.
+        </p>
+        <div class="step-image">
+          <img src="images/motion-step2.jpg" alt="PIR sensor on breadboard" />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 3: Connect Power Wires</h3>
+        <p>
+          Connect the VCC pin to Arduino 5V and GND pin to Arduino GND using
+          jumper wires.
+        </p>
+        <div class="step-image">
+          <img
+            src="images/motion-step3.jpg"
+            alt="Power connections to PIR sensor"
+          />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 4: Connect Signal Wire</h3>
+        <p>
+          Connect the OUT pin of the PIR sensor to digital pin 2 on the Arduino
+          using a jumper wire.
+        </p>
+        <div class="step-image">
+          <img src="images/motion-step4.jpg" alt="Signal wire connection" />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 5: Add LED Circuit</h3>
+        <p>
+          Connect an LED and resistor to digital pin 13. Remember: LED long leg
+          (anode) to resistor, short leg (cathode) to ground.
+        </p>
+        <div class="step-image">
+          <img src="images/motion-step5.jpg" alt="LED circuit setup" />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 6: Upload the Code</h3>
+        <p>
+          Open Arduino IDE, copy the motion detection code, and upload it to
+          your Arduino board.
+        </p>
+        <div class="step-image">
+          <img
+            src="images/motion-step6.jpg"
+            alt="Arduino IDE with motion detection code"
+          />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Step 7: Test Your Motion Detector</h3>
+        <p>
+          Power up your Arduino and wait 10-60 seconds for the PIR sensor to
+          calibrate. Then wave your hand in front of it!
+        </p>
+        <div class="step-image">
+          <img src="images/motion-step7.jpg" alt="Testing motion detector" />
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>🎉 Congratulations!</h3>
+        <p>
+          Your motion detector is working! The LED should light up whenever
+          movement is detected. Try different distances and movements.
+        </p>
+        <div class="step-image">
+          <img
+            src="images/motion-done.jpg"
+            alt="Finished motion detector project"
+          />
+        </div>
+        <!-- Homepage Button -->
+        <a href="../index.html" class="btn-home">🏠 Go to Homepage</a>
+      </div>
+
+      <!-- Navigation -->
+      <button id="nextBtn">Next Step ➡️</button>
+    </section>
+
+    <script src="tutorial.js"></script>
+  </body>
+</html>

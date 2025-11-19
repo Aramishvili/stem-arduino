@@ -1,0 +1,331 @@
+/* ===== HEADER AND NAVIGATION ===== */
+header {
+  background-image: url('images/header_image.png');
+  background-size: 70%;
+  color: rgb(251, 251, 251);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+header h1 {
+  color: white;
+  margin: 0;
+  font-size: 36px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+  background: #005f99;
+  padding: 10px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+#tutorials {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+#progress-container {
+  width: 100%;
+  background: #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+#progress-bar {
+  width: 0%;
+  height: 20px;
+  background: #007acc;
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+.step {
+  display: none;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.step.active {
+  display: block;
+}
+button {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background: #005f99;
+}
+
+.step-image {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.step-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-home {
+  display: inline-block;
+  background: #28a745; /* green color */
+  color: white;
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-home:hover {
+  background: #218838; /* darker green on hover */
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet styles (768px and down) */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 30px 15px;
+    background-size: 80%;
+  }
+
+  header h1 {
+    font-size: 28px;
+  }
+
+  nav {
+    padding: 15px 10px;
+  }
+
+  nav a {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+
+  #tutorials {
+    padding: 15px;
+  }
+
+  #progress-container {
+    margin-bottom: 15px;
+  }
+
+  #progress-bar {
+    height: 18px;
+  }
+
+  .step {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .step h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  button {
+    padding: 12px 18px;
+    font-size: 14px;
+    margin: 5px;
+    min-width: 100px;
+  }
+
+  .btn-home {
+    padding: 12px 18px;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    max-width: 200px;
+    margin: 15px auto 0;
+  }
+}
+
+/* Mobile styles (480px and down) */
+@media screen and (max-width: 480px) {
+  header {
+    padding: 20px 10px;
+    background-size: 90%;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  header p {
+    font-size: 14px;
+  }
+
+  nav {
+    padding: 10px 5px;
+  }
+
+  nav a {
+    margin: 5px 8px;
+    font-size: 13px;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  #tutorials {
+    padding: 10px;
+  }
+
+  #progress-container {
+    margin-bottom: 12px;
+  }
+
+  #progress-bar {
+    height: 16px;
+  }
+
+  .step {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+
+  .step h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .step h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .step p,
+  .step li {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .step ol,
+  .step ul {
+    padding-left: 18px;
+  }
+
+  button {
+    padding: 14px 20px;
+    font-size: 14px;
+    margin: 8px 5px;
+    min-width: 120px;
+    width: auto;
+  }
+
+  .step-image {
+    margin-top: 12px;
+  }
+
+  .step-image img {
+    border-radius: 6px;
+  }
+
+  .btn-home {
+    padding: 14px 20px;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    width: 80%;
+    max-width: 250px;
+    margin: 20px auto 0;
+  }
+
+  /* Navigation buttons container */
+  .step-navigation {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  /* Stack navigation buttons on very small screens */
+  .step-navigation button {
+    display: block;
+    width: 80%;
+    margin: 8px auto;
+    max-width: 200px;
+  }
+}
+
+/* Extra small mobile (320px and down) */
+@media screen and (max-width: 320px) {
+  header h1 {
+    font-size: 20px;
+  }
+
+  nav a {
+    margin: 3px 5px;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .step {
+    padding: 8px;
+  }
+
+  .step h2 {
+    font-size: 16px;
+  }
+
+  .step h3 {
+    font-size: 14px;
+  }
+
+  .step p,
+  .step li {
+    font-size: 12px;
+  }
+
+  button {
+    padding: 12px 16px;
+    font-size: 13px;
+    min-width: 100px;
+  }
+
+  .btn-home {
+    padding: 12px 16px;
+    font-size: 13px;
+    width: 90%;
+  }
+
+  .step-navigation button {
+    width: 90%;
+    margin: 6px auto;
+  }
+}
