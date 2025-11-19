@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arduino Fun Kits for Kids</title>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Enhanced smooth scrolling with offset
+      document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+        navLinks.forEach((link) => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+              const offsetTop = targetElement.offsetTop - 20; // 20px offset
+
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth',
+              });
+            }
+          });
+        });
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -33,7 +57,7 @@
           <div class="featured-container">
             <div class="featured-image">
               <img
-                src="/images/soundkit.png.JPG"
+                src="images/soundkit.png.JPG"
                 alt="Arduino Sound & Light Kit"
               />
             </div>
@@ -74,7 +98,7 @@
               </div>
               <div class="qrcode">
                 <h5>Scan for More Resources</h5>
-                <img src="/images/qrcode.JPG" alt="QR Code for Resources" />
+                <img src="images/qrcode.jpg.JPG" alt="QR Code for Resources" />
               </div>
             </div>
             <a class="btn" href="/tutorial/tutorial.html">Start the Tutorial</a>
@@ -93,7 +117,7 @@
           </p>
           <div class="featured-container">
             <div class="featured-image">
-              <img src="/images/motion.JPG" alt="Arduino motion Kit" />
+              <img src="images/motion.JPG" alt="Arduino motion Kit" />
             </div>
             <div class="featured-details">
               <div class="box_content">
@@ -144,7 +168,7 @@
               </div>
               <div class="qrcode">
                 <h5>Scan for More Resources</h5>
-                <img src="/images/qrcode.JPG" alt="QR Code for Resources" />
+                <img src="images/qrcode.jpg.JPG" alt="QR Code for Resources" />
               </div>
             </div>
             <a class="btn" href="/tutorial/tutorial.html">Start the Tutorial</a>
