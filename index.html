@@ -5,54 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arduino Fun Kits for Kids</title>
     <link rel="stylesheet" href="styles.css" />
-    <script>
-      // Enhanced smooth scrolling with offset
-      document.addEventListener('DOMContentLoaded', function () {
-        const navLinks = document.querySelectorAll('nav a[href^="#"]');
-
-        navLinks.forEach((link) => {
-          link.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-              const offsetTop = targetElement.offsetTop - 20; // 20px offset
-
-              window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth',
-              });
-            }
-          });
-        });
-      });
-    </script>
   </head>
   <body>
     <header>
-      <h1>Arduino Fun Kits for Kids</h1>
+      <h1>STEM Electronics Fun Kits for Kids</h1>
       <p>Learn electronics through play and creativity!</p>
     </header>
+    <!-- Navigation -->
     <nav>
-      <a href="#kits">Kits</a>
-      <a href="#downloads">Downloads</a>
-      <a href="#parents">Parents</a>
+      <a href="#kits">Kits For Kids</a>
+      <a href="#parents">Kits that need Your Parents' Help!</a>
+      <a href="#downloads">Downloads that Help Parents</a>
+      <a href="#order">Order Your STEM Kit</a>
     </nav>
+
+    <!-- Kits Section -->
     <section id="kits">
-      <h2>Our Kits</h2>
+      <h2>Our Kits for Kids do not require any coding or software</h2>
 
       <!-- Sound & Light Kit -->
       <div class="kit">
-        <h3>🎁 Arduino Fun Kit - Build, Learn, Create!</h3>
+        <h2>🎁 Arduino Compatible Microcontroller</h2>
+        <h3>🎤 Sound & Light Kit - Build, Learn, Create!</h3>
         <div id="sound-light-kit">
-          <h4>🎤 Sound & Light Kit</h4>
           <p>
             This kit includes everything kids need to explore sound-activated
             electronics. With a microphone module, LEDs, resistors, and an
-            Arduino Uno, they'll learn how sound can trigger light and bring
-            circuits to life.
+            Arduino Compatible Microcontroller, they'll learn how sound can
+            trigger light and bring circuits to life.
           </p>
           <div class="featured-container">
             <div class="featured-image">
@@ -111,7 +91,8 @@
       <!-- Motion Detector Kit -->
       <div class="kit">
         <div id="motion-detector-kit">
-          <h4>👀 Motion Detector Kit – Detect, React, Protect!</h4>
+          <h2>🎁 Arduino Compatible Microcontroller</h2>
+          <h3>👀 Motion Detector Kit – Detect, React, Protect!</h3>
           <p>
             Build a smart motion detector that lights up when movement is
             detected. Perfect for learning how sensors interact with Arduino to
@@ -181,6 +162,14 @@
       </div>
     </section>
 
+    <section id="parents">
+      <h2>Parents' Corner</h2>
+      <p>
+        Arduino kits help kids learn STEM skills: coding, electronics, and
+        problem-solving.
+      </p>
+    </section>
+
     <section id="downloads">
       <h2>Downloads</h2>
       <p>Get the Arduino IDE and sample codes:</p>
@@ -197,15 +186,62 @@
         <li><a href="#">Sample Code (Blink with Sound)</a></li>
       </ul>
     </section>
-    <section id="parents">
-      <h2>Parents' Corner</h2>
-      <p>
-        Arduino kits help kids learn STEM skills: coding, electronics, and
-        problem-solving.
-      </p>
+    <section id="order">
+      <div class="order">
+        <div class="form">
+          <h2>Order Your STEM Kit</h2>
+          <form action="https://formspree.io/f/mgvjopge" method="POST">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required /><br /><br />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required /><br /><br />
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required /><br /><br />
+
+            <label for="address">Address:</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              required
+            /><br /><br />
+
+            <label for="kit">Select Kit:</label>
+            <select id="kit" name="kit">
+              <option value="motion">Motion Detector Kit</option>
+              <option value="sound">Sound Kit</option></select
+            ><br /><br />
+
+            <label for="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              value="1"
+            /><br /><br />
+
+            <button type="submit">Place Order</button>
+          </form>
+        </div>
+        <div class="instruction">
+          <p>
+            <strong>💳 Payment Instructions:</strong><br />
+            Please transfer the total amount to:<br />
+            Bank of Georgia<br />
+            IBAN: GE00BG0000000000000000<br />
+            Account Name: STEM Kits for Kids<br />
+            Or pay cash on delivery.
+          </p>
+        </div>
+      </div>
     </section>
+
     <footer>
-      <p>Made with ❤️ in Georgia | Follow us on Instagram @ArduinoKids</p>
+      <p>Made with ❤️ in Georgia | Follow us on Instagram @STEMKids</p>
     </footer>
+    <script src="index.js"></script>
   </body>
 </html>
