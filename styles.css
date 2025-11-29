@@ -139,6 +139,12 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.parents {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+}
+
 .order {
   display: flex;
   gap: 70px;
