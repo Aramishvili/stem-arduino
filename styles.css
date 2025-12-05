@@ -15,7 +15,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #9dabb3;
+  background: #4c5a75;
 }
 
 #bg-canvas {
@@ -388,3 +388,4 @@ footer a:hover {
 .social-icons a:hover svg {
   opacity: 0.8;
 }
+
