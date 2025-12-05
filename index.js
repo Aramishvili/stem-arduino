@@ -44,45 +44,44 @@ function initElectricalBackground(containerId) {
 
   camera.position.z = 5;
 
-  // Create electrical circuit-like points
-  const geometry = new THREE.BufferGeometry();
+  // Create polyhedron shapes in 3D space
+  const polyhedronGeometry = new THREE.IcosahedronGeometry(0.15, 0);
+  const polyhedronMaterial = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(1, 0.984, 0), // Your pink/magenta color
+    wireframe: true, // Solid filled shapes
+    transparent: true,
+    opacity: 8, // Slightly transparent for depth effect
+  });
+
+  const gridSize = 28;
+  const spacing = 2.5;
+  const polyhedrons = [];
   const vertices = [];
-  const colors = [];
 
-  const gridSize = 18;
-  const spacing = 1.5;
-
-  // Generate random 3D grid points
+  // Generate random 3D grid of polyhedrons
   for (let x = -gridSize; x <= gridSize; x += spacing) {
     for (let y = -gridSize; y <= gridSize; y += spacing) {
       for (let z = -gridSize; z <= gridSize; z += spacing) {
         if (Math.random() > 0.5) {
+          const poly = new THREE.Mesh(polyhedronGeometry, polyhedronMaterial);
+          poly.position.set(x, y, z);
+          scene.add(poly);
+          polyhedrons.push(poly);
           vertices.push(x, y, z);
-          // Light gray color for points
-          colors.push(1, 0.4, 0.871);
         }
       }
     }
   }
 
-  geometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(vertices, 3)
-  );
-  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
-  const pointMaterial = new THREE.PointsMaterial({
-    size: 0.1,
-    vertexColors: true,
-    transparent: true,
-    opacity: 8,
-    blending: THREE.AdditiveBlending,
+  // Create a group to rotate all polyhedrons together
+  const polyGroup = new THREE.Group();
+  polyhedrons.forEach((poly) => {
+    scene.remove(poly);
+    polyGroup.add(poly);
   });
+  scene.add(polyGroup);
 
-  const points = new THREE.Points(geometry, pointMaterial);
-  scene.add(points);
-
-  // Create connecting lines between nearby points
+  // Create connecting lines between nearby polyhedrons
   const lineGeometry = new THREE.BufferGeometry();
   const lineVertices = [];
   const lineColors = [];
@@ -94,14 +93,14 @@ function initElectricalBackground(containerId) {
       const dz = vertices[i + 2] - vertices[j + 2];
       const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-      // Only connect nearby points randomly
+      // Only connect nearby polyhedrons randomly
       if (distance < spacing * 1.5 && Math.random() > 0.8) {
         lineVertices.push(vertices[i], vertices[i + 1], vertices[i + 2]);
         lineVertices.push(vertices[j], vertices[j + 1], vertices[j + 2]);
 
-        // Light yellow color for lines
-        lineColors.push(0.816, 0.902, 0.573); // Yellow
-        lineColors.push(0.816, 0.902, 0.573);
+        // Your light yellow-green color for lines
+        lineColors.push(0.914, 0, 1);
+        lineColors.push(0.914, 0, 1);
       }
     }
   }
@@ -118,7 +117,7 @@ function initElectricalBackground(containerId) {
   const lineMaterial = new THREE.LineBasicMaterial({
     vertexColors: true,
     transparent: true,
-    opacity: 4,
+    opacity: 1.0, // Max opacity (was 4, clamped to 1)
     blending: THREE.AdditiveBlending,
   });
 
@@ -132,26 +131,32 @@ function initElectricalBackground(containerId) {
 
     time += 0.001;
 
-    // Slow rotation
-    points.rotation.x = time * 0.3;
-    points.rotation.y = time * 0.5;
-    lines.rotation.x = time * 0.3;
-    lines.rotation.y = time * 0.5;
+    // Slow rotation for both polyhedrons and lines
+    polyGroup.rotation.x = time * 0.1;
+    polyGroup.rotation.y = time * 0.2;
+    lines.rotation.x = time * 0.1;
+    lines.rotation.y = time * 0.2;
+
+    // Individual polyhedron rotation for extra visual interest
+    polyhedrons.forEach((poly) => {
+      poly.rotation.x += 0.002;
+      poly.rotation.y += 0.003;
+    });
 
     renderer.render(scene, camera);
   }
 
   animate();
 
-  // Handle window resize
-
-  // Expose to window for Three.js DevTools
+  // Expose to window for Three.js DevTools and console tweaking
   window.threeScene = scene;
   window.threeCamera = camera;
   window.threeRenderer = renderer;
-  window.threePoints = points;
+  window.threePolyhedrons = polyhedrons;
+  window.threePolyGroup = polyGroup;
   window.threeLines = lines;
 
+  // Handle window resize
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -164,8 +169,8 @@ function initElectricalBackground(containerId) {
   return function cleanup() {
     window.removeEventListener('resize', onWindowResize);
     container.removeChild(renderer.domElement);
-    geometry.dispose();
-    pointMaterial.dispose();
+    polyhedronGeometry.dispose();
+    polyhedronMaterial.dispose();
     lineGeometry.dispose();
     lineMaterial.dispose();
   };
