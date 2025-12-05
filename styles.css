@@ -6,9 +6,7 @@ html {
 header {
   background-image: url('images/border_img.png');
   background-size: 70%;
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  color: rgb(251, 251, 251);
+  color: rgb(103, 128, 197);
   padding: 40px 20px;
   text-align: center;
 } /* ===== SMOOTH SCROLLING ===== */
@@ -17,7 +15,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #4c5a75;
+  background: #9dabb3;
 }
 
 #bg-canvas {
@@ -108,6 +106,14 @@ h1 {
   font-size: bold, 50px;
   margin-bottom: 10px;
   color: #035492;
+}
+
+#statement {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #0275d8;
+  text-decoration: solid;
+  text-shadow: #eaebeb 1px 1px 2px;
 }
 
 .featured-details {
