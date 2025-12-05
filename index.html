@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arduino Fun Kits for Kids</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
+    <div id="bg-canvas"></div>
     <header>
       <h1>STEM Electronics Fun Kits for Kids</h1>
       <p>Learn electronics through play and creativity!</p>
@@ -162,47 +164,55 @@
       </div>
     </section>
 
-    <section id="parents">
-      <h2>Parents' Corner</h2>
-      <div class="parents">
-        <h3>Why STEM Matters</h3>
-        <p>
-          STEM skills prepare children for the future. Coding builds logical
-          thinking, electronics spark curiosity, and problem-solving develops
-          resilience.
-        </p>
+    <!-- Parents Section -->
+    <section class="kits">
+      <div class="kit">
+        <h2>Parents' Corner</h2>
+        <div class="parents">
+          <h3>Why STEM Matters</h3>
+          <p>
+            STEM skills prepare children for the future. Coding builds logical
+            thinking, electronics spark curiosity, and problem-solving develops
+            resilience.
+          </p>
 
-        <h3>Benefits of Our Kits</h3>
-        <ul>
-          <li>Hands-on learning with real results</li>
-          <li>Safe, guided tutorials for beginners</li>
-          <li>Encourages teamwork and collaboration</li>
-          <li>Boosts confidence through creative projects</li>
-        </ul>
+          <h3>Benefits of Our Kits</h3>
+          <ul>
+            <li>Hands-on learning with real results</li>
+            <li>Safe, guided tutorials for beginners</li>
+            <li>Encourages teamwork and collaboration</li>
+            <li>Boosts confidence through creative projects</li>
+          </ul>
 
-        <h3>Made for Parents Too</h3>
-        <p>
-          Our kits are affordable, easy to follow, and proudly
-          <strong>Made with ❤️ in Georgia</strong>.
-        </p>
+          <h3>Made for Parents Too</h3>
+          <p>
+            Our kits are affordable, easy to follow, and proudly
+            <strong>Made with ❤️ in Georgia</strong>.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section id="downloads">
-      <h2>Downloads That Help Parents</h2>
-      <p>Get the Arduino IDE and sample codes:</p>
-      <ul>
-        <li>
-          <a
-            href="https://www.arduino.cc/en/software"
-            target="_blank"
-            rel="noopener"
-          >
-            Arduino IDE
-          </a>
-        </li>
-        <li><a href="#">Sample Code (Blink with Sound)</a></li>
-      </ul>
+    <!-- Downloads Section -->
+    <section class="kits">
+      <div class="kit">
+        <section id="downloads">
+          <h2>Downloads That Help Parents</h2>
+          <p>Get the Arduino IDE and sample codes:</p>
+          <ul>
+            <li>
+              <a
+                href="https://www.arduino.cc/en/software"
+                target="_blank"
+                rel="noopener"
+              >
+                Arduino IDE
+              </a>
+            </li>
+            <li><a href="#">Sample Code (Blink with Sound)</a></li>
+          </ul>
+        </section>
+      </div>
     </section>
     <section id="order">
       <div class="order">
@@ -328,7 +338,9 @@
         </a>
       </div>
     </footer>
-
     <script src="index.js"></script>
+    <script>
+      initElectricalBackground('bg-canvas');
+    </script>
   </body>
 </html>
