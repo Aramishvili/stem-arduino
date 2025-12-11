@@ -42,32 +42,45 @@ function initElectricalBackground(containerId) {
   renderer.setClearColor(0x000000, 0); // Transparent background
   container.appendChild(renderer.domElement);
 
-  camera.position.z = 5;
+  camera.position.z = 45;
 
   // Create polyhedron shapes in 3D space
   const polyhedronGeometry = new THREE.IcosahedronGeometry(0.15, 0);
   const polyhedronMaterial = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(1, 0.984, 0), // Your pink/magenta color
+    color: new THREE.Color(0.549, 0.549, 0.49), // Your pink/magenta color
     wireframe: true, // Solid filled shapes
     transparent: true,
-    opacity: 8, // Slightly transparent for depth effect
+    opacity: 0.5, // Slightly transparent for depth effect
   });
 
-  const gridSize = 28;
-  const spacing = 2.5;
+  // Yellow/flesh colored material for flashing effect
+  const yellowMaterial = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(1.0, 0.9, 0.3), // Bright yellow/flesh color
+    wireframe: true,
+    transparent: true,
+    opacity: 0.8,
+  });
+
+  const gridSize = 38;
+  const spacing = 3.5;
   const polyhedrons = [];
   const vertices = [];
+  const polyhedronFlashState = []; // Track flash timing for each polyhedron
 
   // Generate random 3D grid of polyhedrons
   for (let x = -gridSize; x <= gridSize; x += spacing) {
     for (let y = -gridSize; y <= gridSize; y += spacing) {
       for (let z = -gridSize; z <= gridSize; z += spacing) {
         if (Math.random() > 0.5) {
-          const poly = new THREE.Mesh(polyhedronGeometry, polyhedronMaterial);
+          const poly = new THREE.Mesh(
+            polyhedronGeometry,
+            polyhedronMaterial.clone()
+          );
           poly.position.set(x, y, z);
           scene.add(poly);
           polyhedrons.push(poly);
           vertices.push(x, y, z);
+          polyhedronFlashState.push(Math.random() * 100); // Random initial state
         }
       }
     }
@@ -99,8 +112,8 @@ function initElectricalBackground(containerId) {
         lineVertices.push(vertices[j], vertices[j + 1], vertices[j + 2]);
 
         // Your light yellow-green color for lines
-        lineColors.push(0.914, 0, 1);
-        lineColors.push(0.914, 0, 1);
+        lineColors.push(0.549, 0.549, 0.49);
+        lineColors.push(0.549, 0.549, 0.49);
       }
     }
   }
@@ -137,10 +150,24 @@ function initElectricalBackground(containerId) {
     lines.rotation.x = time * 0.1;
     lines.rotation.y = time * 0.2;
 
-    // Individual polyhedron rotation for extra visual interest
-    polyhedrons.forEach((poly) => {
+    // Individual polyhedron rotation and flashing effect
+    polyhedrons.forEach((poly, index) => {
       poly.rotation.x += 0.002;
       poly.rotation.y += 0.003;
+
+      // Flash effect - frequently change some polyhedrons to yellow
+      polyhedronFlashState[index] += 0.05;
+
+      // Each polyhedron has a chance to flash every frame
+      if (Math.sin(polyhedronFlashState[index]) > 0.85) {
+        // Flash to yellow
+        poly.material.color.setRGB(1.0, 0.9, 0.3);
+        poly.material.opacity = 0.9;
+      } else {
+        // Return to original color
+        poly.material.color.setRGB(0.549, 0.549, 0.49);
+        poly.material.opacity = 0.5;
+      }
     });
 
     renderer.render(scene, camera);
