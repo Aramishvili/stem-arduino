@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arduino Fun Kits for Kids</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
-    <div id="bg-canvas"></div>
     <header>
       <h1>STEM Electronics Fun Kits for Kids</h1>
       <p>Learn electronics through play and creativity!</p>
@@ -20,12 +18,18 @@
       <a href="#downloads">Downloads that Help Parents</a>
       <a href="#order">Order Your STEM Kit</a>
     </nav>
+    <canvas id="spark-canvas"></canvas>
+    <div id="arduino-container">
+      <img id="arduino" src="images/ardu2.png" alt="" />
+    </div>
+
+    <div id="ultra">
+      <img id="ultra-img" src="images/ultra.png" alt="Scroll Indicator" />
+    </div>
 
     <!-- Kits Section -->
     <section id="kits">
-      <h2 id="statement">
-        Our Kits for Kids do not require any coding or software
-      </h2>
+      <h2>Our Kits for Kids do not require any coding or software</h2>
 
       <!-- Sound & Light Kit -->
       <div class="kit">
@@ -215,7 +219,6 @@
       </div>
     </section>
 
-    <!-- Order Section -->
     <section id="order">
       <div class="order">
         <div class="form">
@@ -268,7 +271,9 @@
         </div>
       </div>
     </section>
-
+    <div id="micro">
+      <img id="micro-img" src="images/micro2.png" alt="Scroll Indicator" />
+    </div>
     <footer>
       <p>© 2025 STEM Kits for Kids — Made with ❤️ in Georgia</p>
 
@@ -340,9 +345,7 @@
         </a>
       </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="index.js"></script>
-    <script>
-      initElectricalBackground('bg-canvas');
-    </script>
   </body>
 </html>
