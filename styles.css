@@ -3,28 +3,39 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+}
 header {
   background-image: url('images/border_img.png');
   background-size: 70%;
-  color: rgb(103, 128, 197);
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
+  color: rgb(251, 251, 251);
   padding: 40px 20px;
   text-align: center;
 } /* ===== SMOOTH SCROLLING ===== */
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #4c5a75;
+  background: #f9f9f9;
 }
-
-#bg-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
+header {
+  background-image: url('images/border_img.png');
+  background-size: 70%;
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
+  color: rgb(251, 251, 251);
+  padding: 40px 20px;
+  text-align: center;
 }
 
 header h1 {
@@ -53,9 +64,66 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
+
+#arduino-container {
+  position: fixed;
+  top: 50%;
+  right: 40px; /* stick to the right side */
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+#arduino {
+  width: 300px;
+  opacity: 0.7; /* make it slightly transparent */
+  transition: transform 0s; /* no smoothing, instant sync */
+}
+
+#ultra {
+  position: absolute;
+  top: 400px;
+  left: 20px; /* stick to the left side */
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+#ultra-img {
+  width: 150px;
+  opacity: 0.7; /* make it slightly transparent */
+  transition: transform 0s; /* no smoothing, instant sync */
+}
+
+#micro {
+  position: absolute;
+  z-index: 1000;
+  visibility: hidden;
+  left: 20px;
+}
+
+#micro-img {
+  width: 250px;
+  opacity: 0.7; /* make it slightly transparent */
+  transition: transform 0s; /* no smoothing, instant sync */
+}
+
+#spark-canvas {
+  position: fixed;
+  top: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* .content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 40px 80px;
+} */
+
 section {
   padding: 20px;
-  max-width: 1000px;
+  max-width: 900px;
   margin: auto;
 }
 .kit {
@@ -108,14 +176,6 @@ h1 {
   color: #035492;
 }
 
-#statement {
-  font-size: 32px;
-  margin-bottom: 15px;
-  color: #0275d8;
-  text-decoration: solid;
-  text-shadow: #eaebeb 1px 1px 2px;
-}
-
 .featured-details {
   padding: 20px;
   display: grid;
@@ -136,11 +196,17 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.parents {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+}
+
 .order {
   display: flex;
   gap: 70px;
   padding: 20px;
-  max-width: 1000px;
+  max-width: 900px;
   margin: auto;
   background: #c1e6f5;
   padding: 25px;
@@ -157,6 +223,35 @@ footer {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+
+/* Mobile styles (480px and down) */
+@media screen and (max-width: 1280px) {
+  #arduino-container {
+    left: auto; /* remove left positioning */
+    right: 0; /* stick to the right side */
+    transform: translateY(-50%);
+  }
+
+  #arduino {
+    width: 200px; /* make the image tiny */
+  }
+
+  #ultra-img {
+    width: 100px;
+    opacity: 0.5; /* make it slightly transparent */
+    transition: transform 0s; /* no smoothing, instant sync */
+  }
+
+  #micro {
+    position: static !important;
+  }
+
+  #micro-img {
+    width: 80px;
+    opacity: 0.5; /* make it slightly transparent */
+    transition: transform 0s; /* no smoothing, instant sync */
+  }
+}
 
 /* Tablet styles (768px and down) */
 @media screen and (max-width: 768px) {
@@ -176,6 +271,16 @@ footer {
   nav a {
     margin: 0 10px;
     font-size: 14px;
+  }
+
+  #arduino-container {
+    left: auto; /* remove left positioning */
+    right: 0; /* stick to the right side */
+    transform: translateY(-50%);
+  }
+
+  #arduino {
+    width: 120px; /* make the image tiny */
   }
 
   section {
@@ -248,6 +353,12 @@ footer {
     padding: 8px 12px;
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  #spark-canvas {
+    z-index: 2;
+    opacity: 0.8;
+    max-width: 100px;
   }
 
   section {
@@ -388,4 +499,3 @@ footer a:hover {
 .social-icons a:hover svg {
   opacity: 0.8;
 }
-
