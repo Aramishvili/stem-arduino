@@ -3,39 +3,28 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9f9;
-}
 header {
   background-image: url('images/border_img.png');
   background-size: 70%;
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  color: rgb(251, 251, 251);
+  color: #9cbeff;
   padding: 40px 20px;
   text-align: center;
 } /* ===== SMOOTH SCROLLING ===== */
-html {
-  scroll-behavior: smooth;
-}
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f9f9f9;
+  background: #9cbeff;
 }
-header {
-  background-image: url('images/border_img.png');
-  background-size: 70%;
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  color: rgb(251, 251, 251);
-  padding: 40px 20px;
-  text-align: center;
+
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
 }
 
 header h1 {
@@ -64,24 +53,9 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
-
-#arduino-container {
-  position: fixed;
-  top: 50%;
-  right: 20px; /* stick to the right side */
-  transform: translateY(-50%);
-  z-index: 1000;
-}
-
-#arduino {
-  width: 300px;
-  opacity: 0.7; /* make it slightly transparent */
-  transition: transform 0s; /* no smoothing, instant sync */
-}
-
 section {
   padding: 20px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 }
 .kit {
@@ -134,6 +108,14 @@ h1 {
   color: #035492;
 }
 
+#statement {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #0275d8;
+  text-decoration: solid;
+  text-shadow: #eaebeb 1px 1px 2px;
+}
+
 .featured-details {
   padding: 20px;
   display: grid;
@@ -154,17 +136,11 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.parents {
-  max-width: 800px;
-  margin: auto;
-  text-align: left;
-}
-
 .order {
   display: flex;
   gap: 70px;
   padding: 20px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   background: #c1e6f5;
   padding: 25px;
@@ -181,19 +157,6 @@ footer {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-
-/* Mobile styles (480px and down) */
-@media screen and (max-width: 1280px) {
-  #arduino-container {
-    left: auto; /* remove left positioning */
-    right: 0; /* stick to the right side */
-    transform: translateY(-50%);
-  }
-
-  #arduino {
-    width: 200px; /* make the image tiny */
-  }
-}
 
 /* Tablet styles (768px and down) */
 @media screen and (max-width: 768px) {
@@ -213,16 +176,6 @@ footer {
   nav a {
     margin: 0 10px;
     font-size: 14px;
-  }
-
-  #arduino-container {
-    left: auto; /* remove left positioning */
-    right: 0; /* stick to the right side */
-    transform: translateY(-50%);
-  }
-
-  #arduino {
-    width: 120px; /* make the image tiny */
   }
 
   section {
