@@ -21,184 +21,279 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function initElectricalBackground(containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+// Rotate Arduino Image on Scroll
 
-  // Scene setup
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  const renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true,
-  });
+window.addEventListener('scroll', () => {
+  const img = document.getElementById('arduino');
+  const scrollY = window.scrollY;
+  // Directly map scroll position to rotation
+  img.style.transform = `rotate(${scrollY}deg)`;
+});
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0); // Transparent background
-  container.appendChild(renderer.domElement);
+// Position micro image 600px from top of footer
+function positionMicroImage() {
+  const micro = document.getElementById('micro');
+  const footer = document.querySelector('footer');
 
-  camera.position.z = 45;
-
-  // Create polyhedron shapes in 3D space
-  const polyhedronGeometry = new THREE.IcosahedronGeometry(0.15, 0);
-  const polyhedronMaterial = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(0.549, 0.549, 0.49), // Your pink/magenta color
-    wireframe: true, // Solid filled shapes
-    transparent: true,
-    opacity: 0.5, // Slightly transparent for depth effect
-  });
-
-  // Yellow/flesh colored material for flashing effect
-  const yellowMaterial = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(1.0, 0.9, 0.3), // Bright yellow/flesh color
-    wireframe: true,
-    transparent: true,
-    opacity: 0.8,
-  });
-
-  const gridSize = 38;
-  const spacing = 3.5;
-  const polyhedrons = [];
-  const vertices = [];
-  const polyhedronFlashState = []; // Track flash timing for each polyhedron
-
-  // Generate random 3D grid of polyhedrons
-  for (let x = -gridSize; x <= gridSize; x += spacing) {
-    for (let y = -gridSize; y <= gridSize; y += spacing) {
-      for (let z = -gridSize; z <= gridSize; z += spacing) {
-        if (Math.random() > 0.5) {
-          const poly = new THREE.Mesh(
-            polyhedronGeometry,
-            polyhedronMaterial.clone()
-          );
-          poly.position.set(x, y, z);
-          scene.add(poly);
-          polyhedrons.push(poly);
-          vertices.push(x, y, z);
-          polyhedronFlashState.push(Math.random() * 100); // Random initial state
-        }
-      }
-    }
+  if (micro && footer) {
+    const footerTop = footer.offsetTop;
+    const microTop = footerTop - 600;
+    micro.style.top = `${microTop}px`;
+    micro.style.visibility = 'visible';
   }
+}
 
-  // Create a group to rotate all polyhedrons together
-  const polyGroup = new THREE.Group();
-  polyhedrons.forEach((poly) => {
-    scene.remove(poly);
-    polyGroup.add(poly);
-  });
-  scene.add(polyGroup);
+// Call on load and resize
+window.addEventListener('load', positionMicroImage);
+window.addEventListener('resize', positionMicroImage);
 
-  // Create connecting lines between nearby polyhedrons
+// THREE.js Electric Spark Animation Along Zigzag Path
+
+const canvas = document.getElementById('spark-canvas');
+const scene = new THREE.Scene();
+const camera = new THREE.OrthographicCamera(
+  0,
+  200,
+  0,
+  -window.innerHeight,
+  0.1,
+  1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  alpha: true,
+  antialias: true,
+});
+renderer.setSize(600, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+camera.position.z = 100;
+
+// Create zigzag line from top to bottom
+const createZigzagLine = () => {
+  const nav = document.querySelector('nav');
+  const footer = document.querySelector('footer');
+
+  // Calculate start position (200px below nav bar)
+  const startY = nav ? nav.offsetTop + nav.offsetHeight + 200 : 100;
+
+  // Calculate end position (200px above footer)
+  const endY = footer
+    ? footer.offsetTop - 500
+    : document.documentElement.scrollHeight - 400;
+
+  const lineHeight = endY - startY;
+  const zigzagWidth = 60; // Width of zigzag pattern
+  const segmentHeight = 100; // Distance between zigzag points (fewer zigzags)
+  const baseX = 40; // Position off the left edge
+
   const lineGeometry = new THREE.BufferGeometry();
-  const lineVertices = [];
-  const lineColors = [];
+  const linePositions = [];
 
-  for (let i = 0; i < vertices.length; i += 3) {
-    for (let j = i + 3; j < vertices.length; j += 3) {
-      const dx = vertices[i] - vertices[j];
-      const dy = vertices[i + 1] - vertices[j + 1];
-      const dz = vertices[i + 2] - vertices[j + 2];
-      const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const numSegments = Math.ceil(lineHeight / segmentHeight) - 1;
 
-      // Only connect nearby polyhedrons randomly
-      if (distance < spacing * 1.5 && Math.random() > 0.8) {
-        lineVertices.push(vertices[i], vertices[i + 1], vertices[i + 2]);
-        lineVertices.push(vertices[j], vertices[j + 1], vertices[j + 2]);
-
-        // Your light yellow-green color for lines
-        lineColors.push(0.549, 0.549, 0.49);
-        lineColors.push(0.549, 0.549, 0.49);
-      }
-    }
+  for (let i = 0; i <= numSegments; i++) {
+    const y = -(startY + i * segmentHeight);
+    // Create straight zigzag by alternating left/right
+    const zigzag = i % 2 === 0 ? 0 : zigzagWidth;
+    linePositions.push(baseX + zigzag, y, 0);
   }
 
   lineGeometry.setAttribute(
     'position',
-    new THREE.Float32BufferAttribute(lineVertices, 3)
-  );
-  lineGeometry.setAttribute(
-    'color',
-    new THREE.Float32BufferAttribute(lineColors, 3)
+    new THREE.Float32BufferAttribute(linePositions, 3)
   );
 
   const lineMaterial = new THREE.LineBasicMaterial({
-    vertexColors: true,
-    transparent: true,
-    opacity: 1.0, // Max opacity (was 4, clamped to 1)
-    blending: THREE.AdditiveBlending,
+    color: 0x0095d6,
+    transparent: false,
+    opacity: 1,
+    linewidth: 18,
   });
 
-  const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-  scene.add(lines);
+  return new THREE.Line(lineGeometry, lineMaterial);
+};
 
-  // Animation
-  let time = 0;
-  function animate() {
-    requestAnimationFrame(animate);
+let zigzagLine = createZigzagLine();
+scene.add(zigzagLine);
 
-    time += 0.001;
+// Get position along zigzag path
+function getZigzagPosition(scrollPosition) {
+  const nav = document.querySelector('nav');
+  const footer = document.querySelector('footer');
 
-    // Slow rotation for both polyhedrons and lines
-    polyGroup.rotation.x = time * 0.1;
-    polyGroup.rotation.y = time * 0.2;
-    lines.rotation.x = time * 0.1;
-    lines.rotation.y = time * 0.2;
+  const startY = nav ? nav.offsetTop + nav.offsetHeight + 200 : 100;
+  const endY = footer
+    ? footer.offsetTop - 500
+    : document.documentElement.scrollHeight - 400;
+  const lineHeight = endY - startY;
 
-    // Individual polyhedron rotation and flashing effect
-    polyhedrons.forEach((poly, index) => {
-      poly.rotation.x += 0.002;
-      poly.rotation.y += 0.003;
+  const zigzagWidth = 60;
+  const segmentHeight = 100;
+  const baseX = 40;
 
-      // Flash effect - frequently change some polyhedrons to yellow
-      polyhedronFlashState[index] += 0.05;
+  // Calculate the actual line length including the extra segment
+  const numSegments = Math.ceil(lineHeight / segmentHeight) - 1;
+  const actualLineLength = numSegments * segmentHeight;
 
-      // Each polyhedron has a chance to flash every frame
-      if (Math.sin(polyhedronFlashState[index]) > 0.85) {
-        // Flash to yellow
-        poly.material.color.setRGB(1.0, 0.9, 0.3);
-        poly.material.opacity = 0.9;
-      } else {
-        // Return to original color
-        poly.material.color.setRGB(0.549, 0.549, 0.49);
-        poly.material.opacity = 0.5;
-      }
-    });
+  // Calculate scroll progress (0 to 1)
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollProgress = maxScroll > 0 ? scrollPosition / maxScroll : 0;
 
-    renderer.render(scene, camera);
-  }
+  // Map scroll progress to actual line position
+  const lineProgress = startY + scrollProgress * actualLineLength;
+  const y = -lineProgress;
 
-  animate();
+  // Calculate which segment we're in and interpolate
+  const segmentIndex = (lineProgress - startY) / segmentHeight;
+  const segmentProgress = segmentIndex % 1;
+  const currentSegment = Math.floor(segmentIndex);
 
-  // Expose to window for Three.js DevTools and console tweaking
-  window.threeScene = scene;
-  window.threeCamera = camera;
-  window.threeRenderer = renderer;
-  window.threePolyhedrons = polyhedrons;
-  window.threePolyGroup = polyGroup;
-  window.threeLines = lines;
+  // Alternate between left and right
+  const startX = currentSegment % 2 === 0 ? 0 : zigzagWidth;
+  const endX = currentSegment % 2 === 0 ? zigzagWidth : 0;
+  const zigzag = startX + (endX - startX) * segmentProgress;
 
-  // Handle window resize
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
+  const x = baseX + zigzag;
 
-  window.addEventListener('resize', onWindowResize);
-
-  // Return cleanup function if needed
-  return function cleanup() {
-    window.removeEventListener('resize', onWindowResize);
-    container.removeChild(renderer.domElement);
-    polyhedronGeometry.dispose();
-    polyhedronMaterial.dispose();
-    lineGeometry.dispose();
-    lineMaterial.dispose();
-  };
+  return { x, y };
 }
+
+// Create electric spark particles
+const sparkCount = 100;
+const sparkGeometry = new THREE.BufferGeometry();
+const sparkPositions = new Float32Array(sparkCount * 7);
+const sparkColors = new Float32Array(sparkCount * 3);
+
+for (let i = 0; i < sparkCount; i++) {
+  sparkPositions[i * 3] = 20;
+  sparkPositions[i * 3 + 1] = 0;
+  sparkPositions[i * 3 + 2] = 0;
+  // Red color
+  sparkColors[i * 3] = 1.0;
+  sparkColors[i * 3 + 1] = 0.0;
+  sparkColors[i * 3 + 2] = 0.0;
+}
+
+sparkGeometry.setAttribute(
+  'position',
+  new THREE.BufferAttribute(sparkPositions, 3)
+);
+sparkGeometry.setAttribute('color', new THREE.BufferAttribute(sparkColors, 3));
+
+const sparkMaterial = new THREE.PointsMaterial({
+  size: 0.5,
+  transparent: false,
+  opacity: 1,
+  vertexColors: true,
+  blending: THREE.AdditiveBlending,
+  sizeAttenuation: true,
+});
+
+const sparkParticles = new THREE.Points(sparkGeometry, sparkMaterial);
+scene.add(sparkParticles);
+
+// Create glow effect
+const glowCount = 2;
+const glowGeometry = new THREE.BufferGeometry();
+const glowPositions = new Float32Array(glowCount * 5);
+
+for (let i = 0; i < glowCount; i++) {
+  glowPositions[i * 3] = -50;
+  glowPositions[i * 3 + 1] = 0;
+  glowPositions[i * 3 + 2] = 0;
+}
+
+glowGeometry.setAttribute(
+  'position',
+  new THREE.BufferAttribute(glowPositions, 3)
+);
+
+const glowMaterial = new THREE.PointsMaterial({
+  color: 0x0080ff,
+  size: 1,
+  transparent: true,
+  opacity: 1,
+  blending: THREE.AdditiveBlending,
+  sizeAttenuation: false,
+});
+
+const glowParticles = new THREE.Points(glowGeometry, glowMaterial);
+scene.add(glowParticles);
+
+// Track scroll
+let scrollPosition = 0;
+let targetScrollPosition = 0;
+
+function updateScroll() {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  targetScrollPosition = scrollTop;
+}
+
+window.addEventListener('scroll', updateScroll);
+updateScroll();
+
+// Animation
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Smooth scroll with minimal lag
+  scrollPosition += (targetScrollPosition - scrollPosition) * 0.14;
+
+  // Move camera with scroll so line follows page content
+  camera.position.y = -scrollPosition;
+  camera.updateProjectionMatrix();
+
+  // Get spark position on zigzag path
+  const sparkPos = getZigzagPosition(scrollPosition);
+  const time = Date.now() * 0.003;
+
+  // Update spark positions with electric branching effect
+  const positions = sparkGeometry.attributes.position.array;
+  for (let i = 0; i < sparkCount; i++) {
+    const offset = (i / sparkCount - 0.5) * 10;
+    const branchX = Math.sin(time * 6 + i * 0.4) * 2;
+    const branchY = Math.sin(time * 4 + i * 0.7) * 2;
+
+    positions[i * 3] = sparkPos.x + branchX;
+    positions[i * 3 + 1] = sparkPos.y + offset + branchY;
+    positions[i * 3 + 2] = Math.sin(time * 3 + i) * 1;
+  }
+  sparkGeometry.attributes.position.needsUpdate = true;
+
+  // Update glow with circular pattern
+  const glowPos = glowGeometry.attributes.position.array;
+  for (let i = 0; i < glowCount; i++) {
+    const angle = (i / glowCount) * Math.PI * 2;
+    const radius = 5 + Math.sin(time * 2 + i) * 3;
+
+    // glowPos[i * 3] = sparkPos.x + Math.cos(angle + time * 2) * radius;
+    // glowPos[i * 3 + 1] = sparkPos.y + Math.sin(angle + time * 2) * radius;
+    // glowPos[i * 3 + 2] = 0;
+  }
+  glowGeometry.attributes.position.needsUpdate = true;
+
+  // Pulse effects
+  sparkMaterial.opacity = 0.85 + Math.sin(time * 5) * 0.15;
+  glowMaterial.opacity = 0.4 + Math.sin(time * 3.5) * 0.2;
+
+  renderer.render(scene, camera);
+}
+
+// Handle resize
+function onResize() {
+  const height = window.innerHeight;
+  camera.top = 0;
+  camera.bottom = -height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(600, height);
+
+  // Recreate zigzag line
+  scene.remove(zigzagLine);
+  zigzagLine = createZigzagLine();
+  scene.add(zigzagLine);
+}
+
+window.addEventListener('resize', onResize);
+
+animate();
