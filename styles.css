@@ -236,19 +236,32 @@ footer {
     width: 200px; /* make the image tiny */
   }
 
+  #spark-canvas {
+    z-index: 2;
+    opacity: 0.8;
+    max-width: 100px;
+  }
+
+  #ultra {
+    /* position: static !important; */
+    left: 0;
+    top: 400px;
+  }
+
   #ultra-img {
     width: 100px;
-    opacity: 0.5; /* make it slightly transparent */
+    opacity: 0.3; /* make it slightly transparent */
     transition: transform 0s; /* no smoothing, instant sync */
   }
 
   #micro {
-    position: static !important;
+    /* position: static !important; */
+    left: 0;
   }
 
   #micro-img {
     width: 80px;
-    opacity: 0.5; /* make it slightly transparent */
+    opacity: 0.3; /* make it slightly transparent */
     transition: transform 0s; /* no smoothing, instant sync */
   }
 }
@@ -355,10 +368,10 @@ footer {
     background-color: rgba(255, 255, 255, 0.1);
   }
 
-  #spark-canvas {
-    z-index: 2;
-    opacity: 0.8;
-    max-width: 100px;
+  #ultra {
+    /* position: static !important; */
+    left: 0;
+    top: 476px;
   }
 
   section {
